@@ -14,5 +14,12 @@ class GestionClientModel {
         $ligne->execute();
         return $ligne->fetchObject(Client::class);
     }
+    
+    public function findAll(){
+        $unObjetPdo = Connexion::getConnexion();
+        $sql = "select * from CLIENT";
+        $lignes = $unObjetPdo->query($sql);
+        return $lignes->fetchAll(PDO::FETCH_CLASS, client::class);
+    }
 }
 
