@@ -30,7 +30,7 @@ class GestionClientController {
      public function chercheTous(){
         $modele = new GestionClientModel();
         $clients = $modele->findAll();
-        if ($Clients) {
+        if ($clients) {
             $r = new ReflectionClass($this);
             include_once PATH_VIEW . str_replace('Controller', 'View', $r->getShortName()) . "/plusieursClients.php";
         } else {
