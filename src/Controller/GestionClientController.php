@@ -5,6 +5,8 @@ use APP\Model\GestionClientModel;
 use Tools\MyTwig;
 use ReflectionClass;
 use \Exception;
+use APP\Entity\Client;
+use Tools\Repository;
 
 class GestionClientController {
     
@@ -33,8 +35,9 @@ class GestionClientController {
     }
     public function chercheTous() {
         //appel de la méthode findAll() de la classe Model adequate
-        $modele = new GestionClientModel();
-        $clients = $modele->findAll();
+        $repository= Repository::getRepository("APP\Entity\Client");
+        //$modele = new GestionClientModel();
+        $clients = $repository->findAll();
         if ($clients) {
             $r = new ReflectionClass($this);
             $vue = str_replace('Controller', 'View', $r->getShortName()) . "/tousClients.html.twig";
