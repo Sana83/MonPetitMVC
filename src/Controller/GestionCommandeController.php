@@ -30,4 +30,24 @@ class GestionCommandeController {
             throw new Exception("Aucune Commande à afficher");
         }
     }
+    
+    /*public function CommandeClient(){
+        $modele=new GestionCommandeModel();
+        $commandes = $modele->findAll();
+        $client = $modele->findAll()
+        if ($commandes) {
+            $r = new ReflectionClass($this);
+            $vue = str_replace('Controller', 'View', $r->getShortName()) . "/commandeClient.html.twig";
+            MyTwig::afficheVue($vue, array('tousCommandes' => $commandes));
+        } else {
+            throw new Exception("Aucun Client à afficher");
+        }
+        $params = array {
+            'commandes' => $commandes,
+            'Clients' => $client,
+        }
+        }
+    }
+     *
+     */
 }

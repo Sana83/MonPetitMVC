@@ -3,14 +3,14 @@
     <p> <h2> Liste des clients </h2></p>
     <table>
         <tr>
-            <td>num</td>
-            <td>Nom</td>
-            <td>Prenom</td>
-            <td>adresse</td>
-            <td>complement</td>
-            <td>cp</td>
-            <td>ville</td>
-            <td>tel</td>
+            <th>num</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>adresse</th>
+            <th>complement</th>
+            <th>cp</th>
+            <th>ville</th>
+            <th>tel</th>
         </tr>
         {% for unClient in tousClients %}
             <tr>
@@ -26,6 +26,7 @@
             <td>{{ unClient.getCpCli() }}</td>
             <td>{{ unClient.getVilleCli()}}</td>
             <td>{{ unClient.getTelCli() }}</td>
+            <td><a href="/?c=gestionCommande&a=commandesUnClient&id=1" ><button>Voir Commandes</td>
             </tr>
         {% endfor %}
     </table>

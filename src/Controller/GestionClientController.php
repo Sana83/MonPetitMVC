@@ -35,9 +35,11 @@ class GestionClientController {
     }
     public function chercheTous() {
         //appel de la méthode findAll() de la classe Model adequate
-        $repository= Repository::getRepository("APP\Entity\Client");
-        //$modele = new GestionClientModel();
-        $clients = $repository->findAll();
+//        $repository= Repository::getRepository("APP\Entity\Client");
+//        //$modele = new GestionClientModel();
+//        $clients = $repository->findAll();
+        $modele=new GestionClientModel();
+        $clients = $modele->findAll();
         if ($clients) {
             $r = new ReflectionClass($this);
             $vue = str_replace('Controller', 'View', $r->getShortName()) . "/tousClients.html.twig";

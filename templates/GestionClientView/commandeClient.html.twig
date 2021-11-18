@@ -1,0 +1,17 @@
+{% extends "layout.html.twig" %}
+{% block contenu %}
+    <form action="/?c=gestionCommande&a=commandesUnClient&id=1" method="post">
+    {% if unClient %}
+        {% block affiche %}
+            <p> <h1> Informations du client numéro {{ unClient.getId() }}</h1></p>
+            <p>{{ unClient.getPrenomCli() }} {{ unClient.getNomCli() }}</p>
+            <p> {{ unClient.getAdresseRue1Cli() }}
+                {% if unClient.getAdresseRue2Cli() %}
+                <p> {{ unClient.getAdresseRue2Cli() }}</p>
+         {% endif %}
+            <p>{{ unClient.getCpCli() }} {{ unClient.getVilleCli() }}</p>
+            <p>{{ unClient.getTelCli() }}</p
+            <p><h2> Lieste des commandes <h2></p>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
