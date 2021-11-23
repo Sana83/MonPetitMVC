@@ -6,6 +6,7 @@ use APP\Entity\Client;
 use Tools\Connexion;
 
 class GestionClientModel {
+    
     public function find($id) {
         $unObjetPdo = Connexion::getConnexion();
         $sql = "select * from CLIENT where id=:id";
@@ -22,6 +23,7 @@ class GestionClientModel {
         return $lignes->fetchAll(PDO::FETCH_CLASS, client::class);
     }
     
+    
     public function enregistreClient($client){
         $unObjetPdo = Connexion::getConnexion();
         $sql = "insert into client(titreCli, nomCli, prenomCli, adresseRueCli, adresseRue2Cli, cpCli, villeCli, telCli)" 
@@ -30,7 +32,7 @@ class GestionClientModel {
         $s->bindValue(':titreCli', $client->getTitreCli(), PDO::PARAM_STR);
         $s->bindValue(':nomCli', $client->getNomCli(), PDO::PARAM_STR);
         $s->bindValue(':prenomCli', $client->getPrenomCli(), PDO::PARAM_STR);
-        $s->bindValue(':adresseRue1Cli', $client->getAdresseRue1Clie(), PDO::PARAM_STR);
+        $s->bindValue(':adresseRue1Cli', $client->getAdresseRue1Cli(), PDO::PARAM_STR);
         $s->bindValue(':adresseRue2Cli', ($client->getAdresseRue2Cli()=="") ? (null) : ($client->getAdresseRue2Cli()), PDO::PARAM_STR);
         $s->bindValue(':cpCli', $client->getCpCli(), PDO::PARAM_STR);
         $s->bindValue(':villeCli', $client->getVilleCli(), PDO::PARAM_STR);
@@ -38,12 +40,14 @@ class GestionClientModel {
         $s->execute();
     }
     
-        public function findIds() {
+         public function findIds() {
         $unObjetPdo = Connexion::getConnexion();
         $sql = "select id from CLIENT";
         $lignes = $unObjetPdo->query($sql);
-        if ($lignes->rowCount()>0){
-            $t=$lignes->fetchAll(PDO::FETCH_ASSOC);
+        // on va configurer le mode objet pour la lisibilité du code
+        if ($lignes->rowCount() > 0) {
+            //$lignes->setFetchMode();
+            $t = $lignes->fetchAll(PDO::FETCH_ASSOC);
             return $t;
         } else {
             throw new Exception('Aucun client trouvé');

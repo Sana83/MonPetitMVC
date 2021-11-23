@@ -2,8 +2,10 @@
 namespace APP\Controller;
 
 use APP\Model\GestionCommandeModel;
+use APP\Model\GestionClientModel;
 use ReflectionClass;
 use \Exception;
+use Tools\MyTwig;
 
 class GestionCommandeController {
     
@@ -31,23 +33,19 @@ class GestionCommandeController {
         }
     }
     
-    /*public function CommandeClient(){
-        $modele=new GestionCommandeModel();
-        $commandes = $modele->findAll();
-        $client = $modele->findAll()
-        if ($commandes) {
-            $r = new ReflectionClass($this);
-            $vue = str_replace('Controller', 'View', $r->getShortName()) . "/commandeClient.html.twig";
-            MyTwig::afficheVue($vue, array('tousCommandes' => $commandes));
-        } else {
-            throw new Exception("Aucun Client à afficher");
-        }
-        $params = array {
+    public function commandesUnClient($idClient) {
+        //$idClient = filter_var(intval($idClient['Id']), FILTER_VALIDATE_INT);
+        $modele = new GestionCommandeModel();
+        $modeleClient = new GestionClientModel();
+        $commandes = $modele->findAllByIdClient($idClient['id']);
+        $client = $modeleClient->find($idClient['id']);
+        $r = new ReflectionClass($this);
+        $vue = str_replace('Controller', 'View', $r->getShortName()) . "/commandeClient.html.twig";
+        $params = array(
             'commandes' => $commandes,
-            'Clients' => $client,
-        }
-        }
+            'client' => $client
+        );
+        MyTwig::afficheVue($vue, $params);
     }
-     *
-     */
+
 }

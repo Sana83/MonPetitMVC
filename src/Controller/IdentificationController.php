@@ -6,8 +6,8 @@
  * and open the template in the editor.
  */
 
-namespace APP\Controller;
-
-class IdentificationController {
-    
-}
+//namespace APP\Controller;
+//
+//class IdentificationController {
+//    
+//}
