@@ -12,28 +12,19 @@ class GestionClientController {
     
     public function chercheUn($params) {
         //appel de la méthode find($id) de la classe Model adequate
-        $modele = new GestionClientModel();
-        $ids = $modele->findIds();
-        $params['lesId'] = $ids;
+        $repository= Repository::getRepository("APP\Entity\Client");
+        $ids=$repository->findIds();
+        $params['lesId']=$ids;
         if(array_key_exists('id', $params)) {
             $id= filter_var(intval($params["id"]), FILTER_VALIDATE_INT);
-            $unClient = $modele->find($id);
+            $unClient = $repository->find($id);
             $params['unClient']=$unClient;
         }
         $r = new ReflectionClass($this);
         $vue = str_replace('Controller', 'View', $r->getShortName()) . "/unClient.html.twig";
         MyTwig::afficheVue($vue, $params);
-//        $id = filter_var(intval($params["id"]), FILTER_VALIDATE_INT);
-//        $unClient = $modele->find($id);
-//        if ($unClient) {
-//            $r = new ReflectionClass($this);
-//            $vue = str_replace('Controller', 'View', $r->getShortName()) . "/unClient.html.twig";
-//            MyTwig::afficheVue($vue, array('unClient' => $unClient));
-//        } else {
-//            throw new Exception("Client " . $id . " inconnu");
-//        }
     }
-    public function chercheTous() {
+     public function chercheTous() {
         //appel de la méthode findAll() de la classe Model adequate
 //        $repository= Repository::getRepository("APP\Entity\Client");
 //        //$modele = new GestionClientModel();
