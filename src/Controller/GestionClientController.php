@@ -42,7 +42,7 @@ class GestionClientController {
     
     public function creerClient($params) {
         if(empty($params)){
-            $vue = "GestionClientView\\creerClient.html.twig";
+            $vue = "GestionClientView\creerClient.html.twig";
             MyTwig::afficheVue($vue, array());
         } else {
             $this->enregistreClient($params);
