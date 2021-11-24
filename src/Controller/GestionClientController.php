@@ -42,10 +42,13 @@ class GestionClientController {
     
     public function creerClient($params) {
         if(empty($params)){
-            $vue = "GestionClientView\creerClient.html.twig";
+            $vue = "GestionClientView\\creerClient.html.twig";
             MyTwig::afficheVue($vue, array());
         } else {
-            $this->enregistreClient($params);
+            //création de l'objet client
+            $client = new Client($params);
+            $repository = Repository::getRepository("APP\Entity\Client");
+            $repository->insert($client);
             $this->chercheTous();
         }
     }
@@ -54,5 +57,23 @@ class GestionClientController {
         $client = new Client($params);
         $modele = new GestionClientModel();
         $modele->enregistreClient($client);
+    }
+    
+     public function nbClients($params){
+        $repository= Repository::getRepository("APP\Entity\Client");
+        $nbClients= $repository->countRows();
+        echo "nombre de clients : " . $nbClients;
+    }
+    
+    public function statsClients(){
+        $repository= Repository::getRepository("APP\Entity\Client");
+        $statesClients=$repository->statistiqueTousClients();
+        if($statesClients) {
+            $r = new ReflectionClass($this);
+            $vue = str_replace('Controller', 'View', $r->getShortName()) . "/statsClients.html.twig";
+            MyTwig::afficheVue($vue, array('statsClients' => $statesClients));
+        } else{
+            throw new Exception("Aucune statistique à afficher");
+        }
     }
 }

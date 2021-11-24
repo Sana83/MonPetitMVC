@@ -48,4 +48,44 @@ class Repository {
         $ids = $lignes->fetchAll(PDO::FETCH_ASSOC);
         return $ids;
     }
+    
+    public function insert($objet) {
+        // conversion d'un objet en tableau
+        $attributs = (array) $objet;
+        array_shift($attributs);
+        $colonnes = "(";
+        $colonnesParams = "(";
+        $parametres = array();
+        foreach ($attributs as $cle => $valeur) {
+            $cle = str_replace("\0", "", $cle);
+            $c = str_replace($this->classeNameLong, "", $cle);
+            $p = ":" . $c;
+            if ($c != "id") {
+                $colonnes .= $c . " ,";
+                $colonnesParams .= " ? ,";
+                $parametres[] = $valeur;
+            }
+        }
+        $colonnes = substr($colonnes, 0, -1);
+        $colonnesParams = substr($colonnesParams, 0, -1);
+        $sql = "insert into " . $this->table . "" . $colonnes . ") values " . $colonnesParams . ")";
+        $unObjetPDO = Connexion::getConnexion();
+        $req = $unObjetPDO->prepare($sql);
+        $req->execute($parametres);
+    }
+    
+    public function countRows() {
+        $sql = "select count(*) AS total from ".$this->table;
+        return $this->connexion->query($sql)->fetchColumn();
+    }
+ 
+    public function statistiqueTousClients(){
+        $sql = "select client.id, client.nomCli, client.prenomCli, client.villeCli from client";
+        return $this->connexion->query($sql);
+    }       
+    
+    public function executeSQL($sql):array {
+        $resultat=$this->connexion->query($sql);
+        return $resultat->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
